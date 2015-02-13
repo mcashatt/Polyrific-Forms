@@ -1,3 +1,6 @@
+//Polyrific Forms: a collection of AngularJS directives for rapid form creation by Matt Cashatt
+//This code is made available under the GPL V3 license (http://choosealicense.com/licenses/gpl-3.0/).  You can use it anywhere you like, but if you improve it, you need to share with the rest of us!
+
 angular.module('app.directives').directive('prFormInput', [function () {
     return {
         template: function (element) {
