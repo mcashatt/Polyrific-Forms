@@ -189,11 +189,11 @@ angular.module('app.directives').directive('prDateTimePicker', [function () {
 angular.module('app.directives').directive('prFormButton', [function () {
     return {
         template: function (element) {
-            var label = element.attr("data-label");
-            var id = element.attr("data-name");
-            var span = element.attr("data-span");
+            var label = element.attr("label");
+            var id = element.attr("name");
+            var span = element.attr("span");
             var color;
-            switch (element.attr("data-color")) {
+            switch (element.attr("color")) {
                 case "blue":
                     color = "blue-button";
                     break;
