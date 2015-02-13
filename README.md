@@ -21,6 +21,7 @@ And it creates an expanded bit of HTML at runtime like this:
 ```
 
 ##Dependencies
+- AngularJS (https://angularjs.org/)
 - Bootstrap (http://getbootstrap.com/)
 - Bootstrap UI for Angular (http://angular-ui.github.io/bootstrap/)
 
