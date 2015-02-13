@@ -46,7 +46,7 @@ There are several additional attributes that can be added to your master div ele
 - **extra-attribute**: Any arbitary additional attribute, such as angular directives, that should be assigned to the element.  This can be a single attribute or a list of extra attributes.
 - **help**: This attribute adds a little "(?)" next to the label that has a tooltip assigned so that when the user hovers over it they can see what the control is for.  You assign the help text as the value of this attribute (e.g. help="This control is where you enter your first name").
 - **pattern**: This attribute renders as "ng-pattern" and is where you assign any validation regex patterns needed for the field such as email, credit card, etc.
-- - **focus**: This attribute renders as "ng-focus" on the control and you would insert a function to call on the control's focus event (e.g. focus="DoStuff()").
+- **focus**: This attribute renders as "ng-focus" on the control and you would insert a function to call on the control's focus event (e.g. focus="DoStuff()").
 - **blur**: This attribute renders as "ng-blur" on the control and you would insert a function to call on the blur event (e.g. blur="DoStuff()").
 - **isRequired**: If the element is not a required field, set this to false.  If it is required, set the value as "true" plus a pipe plus the form name (e.g. isRequired="true|frmSomeFormName").
 - **requiredCondition**: Under what conditions should the field be required (e.g requiredCondition="!Page.Item.SomeValue").
