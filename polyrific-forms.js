@@ -43,8 +43,20 @@ angular.module('app.directives').directive('prFormInput', [function () {
             var max = (element.attr("max") != undefined && element.attr("max") != "") ? "max='" + element.attr("max") + "'" : "";
             var extraAttribute = (element.attr("extra-attribute") != undefined && element.attr("extra-attribute") != "") ? element.attr("extra-attribute") : "";
 
-            var span = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span") : "12";
-            return "<div class='col-lg-" + span + " col-md-" + span + " col-sm-" + span + " col-xs-" + span + "'>" + label + "<input " + extraAttribute + " " + min + " " + max + " autocomplete='off' type='" + type + "' class='form-control' " + ngClass + " id='" + id + "'" + keyup + " ng-model='" + model
+
+            var span;
+            var spanArray = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span").split("-") : ["12"];
+
+            switch (spanArray.length) {
+                case 1:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[0] + " col-sm-" + spanArray[0] + " col-xs-" + spanArray[0];
+                    break;
+                default:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[1] + " col-sm-" + spanArray[2] + " col-xs-" + spanArray[3];
+                    break;
+            }
+
+            return "<div class='" + span + "'>" + label + "<input " + extraAttribute + " " + min + " " + max + " autocomplete='off' type='" + type + "' class='form-control' " + ngClass + " id='" + id + "'" + keyup + " ng-model='" + model
                 + "' " + blur + focus + " placeholder='" + placeholder + "' " + isRequired + " name='" + id + "' id='" + id + "' " + pattern + ">" + tooltip + "</div>";
         }
     };
@@ -64,9 +76,21 @@ angular.module('app.directives').directive('prFormTextarea', [function () {
             var label = (element.attr("label") != undefined && element.attr("label") != "") ? "<label for='" + id + "'>" + element.attr("label") + help + asterisk + "</label>" : "";
             var model = element.attr("model");
             var placeholder = element.attr("placeholder");
-            var span = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span") : "12";
+
+            var span;
+            var spanArray = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span") : "12";
+
+            switch (spanArray.length) {
+                case 1:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[0] + " col-sm-" + spanArray[0] + " col-xs-" + spanArray[0];
+                    break;
+                default:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[1] + " col-sm-" + spanArray[2] + " col-xs-" + spanArray[3];
+                    break;
+            }
+
             var rows = (element.attr("rows") != undefined && element.attr("rows") != "") ? element.attr("rows") : "4";
-            return "<div class='col-lg-" + span + " col-md-" + span + " col-sm-" + span + " col-xs-" + span + "'>" + label + "<textarea rows='" + rows + "' class='form-control' " + ngClass + " id='" + id + "' ng-model='" + model
+            return "<div class='" + span + "'>" + label + "<textarea rows='" + rows + "' class='form-control' " + ngClass + " id='" + id + "' ng-model='" + model
                 + "' placeholder='" + placeholder + "' " + isRequired + " name='" + id + "' " + pattern + "></textarea></div>";
         }
     };
@@ -85,7 +109,19 @@ angular.module('app.directives').directive('prFormSelect', [function () {
             var help = (element.attr("help") && element.attr("help") != "") ? " <span title='" + element.attr("help") + "'>(?)</span> " : "";
             var label = (element.attr("label") != undefined && element.attr("label") != "") ? "<label for='" + id + "'>" + element.attr("label") + help + asterisk + "</label>" : "";
             var options = element.attr("options");
-            var span = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span") : "12";
+
+            var span;
+            var spanArray = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span") : "12";
+
+            switch (spanArray.length) {
+                case 1:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[0] + " col-sm-" + spanArray[0] + " col-xs-" + spanArray[0];
+                    break;
+                default:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[1] + " col-sm-" + spanArray[2] + " col-xs-" + spanArray[3];
+                    break;
+            }
+
             var change = (element.attr("change") != "") ? "ng-change='" + element.attr("change") + "'" : "";
             var ngClass = (isRequired == "required") ? "ng-class=\"{'alert-danger': (ShowValidationMessages || " + form + "." + id + ".$dirty) && (" + form + "." + id + ".$error.required || " + form + "." + id + ".$invalid), 'alert-success':" + form + "." + id + ".$dirty && !" + form + "." + id + ".$error.required && !" + form + "." + id + ".$invalid}\"" : "";
             var placeholder = element.attr("placeholder");
@@ -93,7 +129,7 @@ angular.module('app.directives').directive('prFormSelect', [function () {
             var selectorValue = (element.attr("selectorValue") != undefined && element.attr("selectorValue") != "") ? "op." + element.attr("selectorValue") + " as op" : "";
             var selectorPrefix = (element.attr("selectorValue") != undefined && element.attr("selectorValue") != "") ? "" : (selector == "") ? "op" : "op as op";
 
-            return "<div class='col-lg-" + span + " col-md-" + span + " col-sm-" + span + " col-xs-" + span + "'>" + label
+            return "<div class='" + span + "'>" + label
                 + "<div class='clear1'></div><select " + change + model + " class='form-control' " + ngClass + " ng-options='" + selectorPrefix + selectorValue + selector + " for op in " + options + "'><option value='' disabled selected>" + placeholder + "</option></select></div>";
         }
     };
@@ -107,14 +143,26 @@ angular.module('app.directives').directive('prFormCheckradio', [function () {
             var model = element.attr("model");
             var type = (element.attr("type") != undefined && element.attr("type") != "") ? element.attr("type") : "checkbox";
             var repeatList = element.attr("repeat");
-            var span = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span") : "12";
+
+            var span;
+            var spanArray = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span") : "12";
+
+            switch (spanArray.length) {
+                case 1:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[0] + " col-sm-" + spanArray[0] + " col-xs-" + spanArray[0];
+                    break;
+                default:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[1] + " col-sm-" + spanArray[2] + " col-xs-" + spanArray[3];
+                    break;
+            }
+
             var result = "";
 
             //Is there a list to repeat?
             if (repeatList != "" && repeatList != undefined) {
                 //ToDo: create repeat logic
             } else {
-                result += "<div class='col-lg-" + span + " col-md-" + span + " col-sm-" + span + " col-xs-" + span + "'><label><input id='" + id + "' ng-model='" + model + "' type='" + type + "'> " + label + "</label></div>";
+                result += "<div class='" + span + "'><label><input id='" + id + "' ng-model='" + model + "' type='" + type + "'> " + label + "</label></div>";
             }
 
             return result;
@@ -137,9 +185,20 @@ angular.module('app.directives').directive('prDateTimePicker', [function () {
             var label = (element.attr("label") != undefined && element.attr("label") != "") ? "<label for='" + id + "'>" + element.attr("label") + help + asterisk + "</label>" : "";
             var margin = (element.attr("label") != undefined && element.attr("label") != "") ? "9" : "33";
             var model = element.attr("model");
-            var span = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span") : "12";
 
-            return "<div class='dateTimePicker col-lg-" + span + " col-md-" + span + " col-sm-" + span + " col-xs-" + span + " dtpContainer'><div class='row'><div class='col-lg-6'>" + label + "<p style='margin-top:" + margin + "px;' class='input-group'>" +
+            var span;
+            var spanArray = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span") : "12";
+
+            switch (spanArray.length) {
+                case 1:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[0] + " col-sm-" + spanArray[0] + " col-xs-" + spanArray[0];
+                    break;
+                default:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[1] + " col-sm-" + spanArray[2] + " col-xs-" + spanArray[3];
+                    break;
+            }
+
+            return "<div class='dateTimePicker " + span + " dtpContainer'><div class='row'><div class='col-lg-6'>" + label + "<p style='margin-top:" + margin + "px;' class='input-group'>" +
                "<input name='" + id + "' id=\"" + id + "\" type='text' class='form-control' " + ngClass + "min-date='" + Date.now() + "' datepicker-popup='MM/dd/yyyy' date-disabled='disabled(date, mode)'  ng-model='" + model + ".Date'  " +
                " " + isRequired + " close-text='Close' /><span class='input-group-btn'><button class='btn btn-default prCalendar' data-id=\"" + id + "\"><i class='glyphicon glyphicon-calendar'></i></button></span></p></div><div class='col-lg-6'><div ng-model='" + model + ".Time' ng-change='changed()' style='display: inline-block;'>" +
                "<timepicker hour-step='1' minute-step='1' show-meridian='true' " + isRequired + "></timepicker></div></div></div></div>";
@@ -189,11 +248,21 @@ angular.module('app.directives').directive('prDateTimePicker', [function () {
 angular.module('app.directives').directive('prFormButton', [function () {
     return {
         template: function (element) {
-            var label = element.attr("label");
-            var id = element.attr("name");
-            var span = element.attr("span");
+            var label = element.attr("data-label");
+            var id = element.attr("data-name");
+            var span;
+            var spanArray = (element.attr("span") != undefined && element.attr("span") != "") ? element.attr("span") : "12";
+
+            switch (spanArray.length) {
+                case 1:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[0] + " col-sm-" + spanArray[0] + " col-xs-" + spanArray[0];
+                    break;
+                default:
+                    span = "col-lg-" + spanArray[0] + " col-md-" + spanArray[1] + " col-sm-" + spanArray[2] + " col-xs-" + spanArray[3];
+                    break;
+            }
             var color;
-            switch (element.attr("color")) {
+            switch (element.attr("data-color")) {
                 case "blue":
                     color = "blue-button";
                     break;
@@ -204,7 +273,7 @@ angular.module('app.directives').directive('prFormButton', [function () {
                     color = "";
                     break;
             }
-            return "<div class='col-lg-" + span + "'><button id='" + id + "' type='button' class='" + color + "'>" + label + "</button></div>";
+            return "<div class='" + span + "'><button id='" + id + "' type='button' class='" + color + "'>" + label + "</button></div>";
         }
     };
 }]);
